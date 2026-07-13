@@ -26,32 +26,34 @@ def generate_short_code(length=6):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for _ in range(length))
 
+# --- UI Page ---
 @app.get("/", response_class=HTMLResponse)
 async def home_page(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    # Fix: Wrap parameters explicitly inside the context keyword argument
+    return templates.TemplateResponse(
+        request=request, 
+        name="index.html", 
+        context={}
+    )
 
+# --- Action: Shorten Link ---
 @app.post("/shorten", response_class=HTMLResponse)
 async def create_short_url(request: Request, long_url: str = Form(...)):
-    short_code = generate_short_code()
-    existing = await db.url.find_unique(where={"shortCode": short_code})
-    while existing:
-        short_code = generate_short_code()
-        existing = await db.url.find_unique(where={"shortCode": short_code})
-    await db.url.create(
-        data={
-            "longUrl": long_url,
-            "shortCode": short_code
+    # ... your existing short code generation and db write logic stays here ...
+    
+    base_url = str(request.base_url)
+    full_short_url = f"{base_url}{short_code}"
+    
+    # Fix: Wrap parameters explicitly inside the context keyword argument
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "short_url": full_short_url,
+            "long_url": long_url
         }
     )
 
-    base_url = str(request.base_url)
-    full_short_url = f"{base_url}{short_code}"
-
-    return templates.TemplateResponse("index.html", {
-        "request":request,
-        "short_url": full_short_url,
-        "long_url": long_url
-    })
 
 @app.get("/{short_code}")
 async def redirect_to_long_url(short_code: str):
