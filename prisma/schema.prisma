@@ -13,7 +13,7 @@ generator client {
 model Url {
     id Int @id @default(autoincrement())
     shortCode String @unique @map("short_code")
-    longUrl TEXT @map("long_url")
+    longUrl String @map("long_url")
     createdAt DateTime @default(now()) @map("created_at")
 
     @@map("urls")
