@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Shortener</title>
+    <link rel="icon" href="/assets/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<style>
+.cascadia-code {
+  font-family: "Cascadia Code", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+body {
+    font-family: 'Cascadia Code', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+</style>
+</head>
+<body>
+    <h1>Welcome to Star Shortener <a href="https://github.com/z0b1">my project</a>for stardance a <a href="https://hackclub.com">Hack Club</a>YSWS</h1>
+    <h2>Create a Shortened URL</h2>
+    <form action="/shorten" method="post">
+        <label>Enter the URL to shorten:</label>
+        <input type="url" name="long_url" placeholder="https://z0b1.tech" required>
+        <button type="submit">Shorten URL</button>
+    </form>
+
+    {% if short_url %}
+    <div class="result">
+        <p><strong>ur short link</strong> <a href="{{ short_url }}" target="_blank">{{ short_url }}</a></p>
+        <p>points to: {{ long_url }}</p>
+    </div>
+    {% endif %}
+    <div>
+    <img src="/assets/pic1.png" alt="Picture one">
+    </div>
+    <h3>lack of css is intentional</h3>
+    <p>made with <3 by teenagers for teenagers</p>
+</body>
+</html>
